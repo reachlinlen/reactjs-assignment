@@ -1,0 +1,8 @@
+.buttons {
+  display: inline-grid;
+}
+
+.user-a {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
