@@ -10,7 +10,9 @@ export default function Table() {
           ['transId02', 'USER - B', 'VISA', 3500],
           ['transId03', 'USER - C', 'DBS PayLah', 2500],
         ];
-  const allRows = rowDetails.map(r => Row(r[0], r[1], r[2], r[3]));
+  const allRows = rowDetails.map(r => {
+    return <Row tranID={r[0]} userName={r[1]} payMode={r[2]} amt={r[3]} />;
+  });
   return (
     <div>
       <table style={{borderCollapse: 'collapse', width: '100%', display: 'inline-grid', margin: '2vh 0 0 15vw'}}>
