@@ -9,7 +9,7 @@ import Radio from '@material-ui/core/Radio';
 const INIT_VAL = 0;
 export default function Form() {
   return (
-    <div className="form-container" style={{width: '50vw', height: '30vh', border: '1px solid #000', display: 'inline-flex', margin: '2vh 0 0 15vw', backgroundColor: 'grey'}}>
+    <div className="form-container" style={{width: '50vw', height: '30vh', border: '1px solid #000', display: 'inline-flex', margin: '2vh 0 0 15vw', backgroundColor: '#b6b9ba'}}>
       <div className="buttons" style={{display: 'inline-grid'}}>
         <Button className="user-a" variant="contained" color="primary" style={{margin: '2vh 2vw 2vh 2vw'}}>USER A</Button>
         <Button className="user-b" variant="contained" color="primary" style={{margin: '2vh 2vw 2vh 2vw'}}>USER B</Button>
@@ -20,13 +20,13 @@ export default function Form() {
           <RadioGroup className="radio-buttons" style={{display: 'inline-block', padding: '2vh 0 0 4vw'}} >
             <FormControlLabel value="American Express" control={<Radio color="primary"/>} label="American Express" />
             <FormControlLabel value="Visa" control={<Radio color="primary"/>} label="Visa" style={{padding: '0 2vw 0 2vw'}} />
-            <FormControlLabel value="DBS PayLAh!" control={<Radio color="primary"/>} label="DSB Paylah" />
+            <FormControlLabel value="DBS PayLah!" control={<Radio color="primary"/>} label="DSB Paylah" />
           </RadioGroup>
         </div>
-        <div className="transaction" pattern="[0-9]*" value={INIT_VAL} style={{display: 'inline-flex'}}>
+        <div className="transaction" style={{display: 'inline-flex'}}>
           <div >
-            <input type="text" style={{margin: '0 0 0 5vw'}}/>
-            <p style={{margin: '0 0 0 5vw', fontSize: '1.3vh'}}>***Maximum Allowed amount is 5000 INR</p>
+            <input type="number"  style={{margin: '0 0 0 5vw'}}/>
+            <p style={{margin: '0 0 0 5vw', fontSize: '1.1vh'}}>***Maximum Allowed amount is 5000 INR</p>
           </div>
           <div>
             <Button className="transfer" variant="contained" color="primary" style={{margin: '0 0 0 4vw'}}>Transfer</Button>
