@@ -1,3 +1,2 @@
-/node_modules
-/.vscode
-.babelrc
+node_modules/
+.vscode/
