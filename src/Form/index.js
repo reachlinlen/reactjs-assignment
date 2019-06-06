@@ -4,13 +4,20 @@ import { display } from '@material-ui/system';
 import { grey } from '@material-ui/core/colors';
 import { RadioGroup, FormControlLabel } from '@material-ui/core';
 import Radio from '@material-ui/core/Radio';
+import axios from 'axios';
 
 // import './Form.css';
 const INIT_VAL = 0;
 export default function Form() {
   const [user, setUser] = useState('USER A');
-  const [bank, setBank] = useState('merican Express');
+  const [bank, setBank] = useState('American Express');
   const [amt, setAmt] = useState(0);
+
+  const headers = {
+    'Content-Type': 'application/json',
+    // 'Authorization': 'JWT',
+    'Access-Control-Allow-Origin': '*',
+  }
 
   const handleBtnClick = (e) => {
     setUser(e.target.innerHTML);
@@ -19,7 +26,19 @@ export default function Form() {
     setBank(e.target.value);
   }
   const handleClickTx = () => {
-    console.log("Do Transfer");
+    let data = {
+      userName: user,
+      bankName: bank,
+      txnAmt: amt
+    }
+    axios.post('http://localhost:8081/txn', data, {headers: headers})
+    .then(function (res) {
+      console.log("Res: "+res);
+      // INCLUDE REDUX TO UPDATE THE STORE
+    })
+    .catch(function (error) {
+      console.log("Error: "+error);
+    });
   }
   const handleAmtChange = (e) => {
     setAmt(e.target.value);
@@ -36,7 +55,8 @@ export default function Form() {
       </div>
       <div className="column-2" style={{display: 'inline-grid'}}>
         <div className="bank-radio-buttons">
-          <RadioGroup className="radio-buttons" style={{display: 'inline-block', padding: '2vh 0 0 4vw'}} onChange={handleBankChange} >
+          <RadioGroup className="radio-buttons" style={{display: 'inline-block', padding: '2vh 0 0 4vw'}} 
+                        value={bank} onChange={handleBankChange} >
             <FormControlLabel value="American Express" control={<Radio color="primary"/>} label="American Express" />
             <FormControlLabel value="Visa" control={<Radio color="primary"/>} label="Visa" style={{padding: '0 2vw 0 2vw'}} />
             <FormControlLabel value="DBS PayLah!" control={<Radio color="primary"/>} label="DSB Paylah" />
