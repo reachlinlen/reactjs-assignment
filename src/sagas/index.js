@@ -35,7 +35,8 @@ function* getTxn(action) {
 
 function* recordTxn(action) {
     const { res, error } = yield call(recordTxnAPI, action.payload );
-    if (error) yield put({ type: 'PUT_TXN_ERROR', error});
+    yield put({ type: 'TXN_DATA_RECEIVED', data: action.payload});
+    // if (error) yield put({ type: 'PUT_TXN_ERROR', error});
 }
 
 export function* rootSaga() {

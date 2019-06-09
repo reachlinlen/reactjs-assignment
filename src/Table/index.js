@@ -1,10 +1,11 @@
 import React from 'react';
 import TableHead from './TableHead';
 import Row from './Row';
+import { connect } from 'react-redux';
 
 const NO_ROWS = 5;
 
-export default function Table() {
+function Table() {
   const rowDetails = [
           ['transId01', 'USER - A', 'American Express', 500],
           ['transId02', 'USER - B', 'VISA', 3500],
@@ -22,3 +23,9 @@ export default function Table() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  data: state.data
+};
+
+export default connect(mapStateToProps, null)(Table);

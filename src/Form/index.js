@@ -22,6 +22,7 @@ function Form(props) {
       alert("Please enter transaction amount between 0 and 5000");
     } else {
       let data = {
+        "transID" : "TRANS"+ user.replace(/\s/g, '') + Math.floor(Date.now()/1000),
         "userName": user,
         "bankName": bank,
         "txnAmt": amt
