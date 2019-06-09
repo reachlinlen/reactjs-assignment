@@ -17,12 +17,18 @@ function Form(props) {
     setBank(e.target.value);
   }
   const handleClickTx = () => {
-    let data = {
-      "userName": user,
-      "bankName": bank,
-      "txnAmt": amt
+    if (amt === 0 || amt > 5000 || amt < 0 || amt === "") {
+      setAmt(0);
+      alert("Please enter transaction amount between 0 and 5000");
+    } else {
+      let data = {
+        "userName": user,
+        "bankName": bank,
+        "txnAmt": amt
+      }
+      props.recordTxn(data);
+      setAmt(0);
     }
-    props.recordTxn(data);
   }
   const handleAmtChange = (e) => {
     setAmt(e.target.value);
@@ -48,7 +54,7 @@ function Form(props) {
         </div>
         <div className="transaction" style={{display: 'inline-flex'}}>
           <div >
-            <input type="number"  style={{margin: '0 0 0 5vw'}} onChange={handleAmtChange} />
+            <input type="number"  style={{margin: '0 0 0 5vw'}} value={amt} placeholder={0} onChange={handleAmtChange} min={0} max={5000}/>
             <p style={{margin: '0 0 0 5vw', fontSize: '1.1vh'}}>***Maximum Allowed amount is 5000 INR</p>
           </div>
           <div>
