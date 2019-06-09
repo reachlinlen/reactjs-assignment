@@ -16,23 +16,21 @@ const headers = {
 const URL = 'http://localhost:8081';
 
 function* getTxnAPI() {
-  return axios.get(URL+'/txn')
-                .then(res => ({ res }))
+  return axios.get(URL+'/txn', {headers: headers})
+                .then(res => res)
                 .catch(error => error);
 }
 
 function* recordTxnAPI(action) {
   return axios.put(URL+'/txn', { headers : headers, body: action })
-                .then(res => ({ res }))
+                .then(res => res)
                 .catch(error => error);
-//   let data = [["Hi","How"]];
-//   yield put({ type: 'TXN_DATA_RECEIVED', data: data })
 }
 
 function* getTxn(action) {
     const { res, error } = yield call(getTxnAPI);
     res ? yield put({ type: 'TXN_DATA_RECEIVED', res}) : 
-               yield put({ type: 'TXN_DATA_FAILED', error });
+          yield put({ type: 'TXN_DATA_FAILED', error});
 }
 
 function* recordTxn(action) {
