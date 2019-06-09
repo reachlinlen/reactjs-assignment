@@ -1,23 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
-import { display } from '@material-ui/system';
-import { grey } from '@material-ui/core/colors';
 import { RadioGroup, FormControlLabel } from '@material-ui/core';
 import Radio from '@material-ui/core/Radio';
-import axios from 'axios';
+import { connect } from 'react-redux';
+import {rootSaga} from '../sagas';
 
-// import './Form.css';
-const INIT_VAL = 0;
-export default function Form() {
+function Form(props) {
   const [user, setUser] = useState('USER A');
   const [bank, setBank] = useState('American Express');
   const [amt, setAmt] = useState(0);
-
-  const headers = {
-    'Content-Type': 'application/json',
-    // 'Authorization': 'JWT',
-    'Access-Control-Allow-Origin': '*',
-  }
 
   const handleBtnClick = (e) => {
     setUser(e.target.innerHTML);
@@ -27,18 +18,11 @@ export default function Form() {
   }
   const handleClickTx = () => {
     let data = {
-      userName: user,
-      bankName: bank,
-      txnAmt: amt
+      "userName": user,
+      "bankName": bank,
+      "txnAmt": amt
     }
-    axios.post('http://localhost:8081/txn', data, {headers: headers})
-    .then(function (res) {
-      console.log("Res: "+res);
-      // INCLUDE REDUX TO UPDATE THE STORE
-    })
-    .catch(function (error) {
-      console.log("Error: "+error);
-    });
+    props.recordTxn(data);
   }
   const handleAmtChange = (e) => {
     setAmt(e.target.value);
@@ -76,3 +60,11 @@ export default function Form() {
     </div>
   );
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    recordTxn: (data) => dispatch({ type: 'TXN_PUT_RECORD', payload: data })
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Form);
