@@ -36,4 +36,9 @@ module.exports = {
       chunkFilename: "[id].css"
     })
   ],
+  devtool: "source-map",
+  // entry: {
+  //   js: ['babel-polyfill', './index.js'],
+  //   vendor: ['react']
+  // },
 };

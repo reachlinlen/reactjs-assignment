@@ -1,11 +1,10 @@
 // const initialState = { "TxnData": {}, ""}
-export const reducer = (state = [], action) => {
+export const reducer = (state = { data: []}, action) => {
   switch(action.type) {
     case 'TXN_DATA_RECEIVED':
-      // let latestTxnData = state.TxnData;
-      // latestTxnData.push(action.data);
-      // return Object.assign({...state}, {latestTxnData});
-      return [...state, action.data]
+      let latData = [...state.data];
+      latData.unshift(action.data);
+      return Object.assign({}, state, { data: latData })
     case 'TXN_DATA_FAILED':
       return state;
     default:
