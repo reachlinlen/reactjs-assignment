@@ -11,7 +11,7 @@ class App extends Component {
 
   render() {
     return (
-      <div style={{display: 'inline-grid'}}>
+      <div style={{display: 'inline-grid', paddingLeft: '50px'}}>
         <Form />
         <Table />
         <LineChart />

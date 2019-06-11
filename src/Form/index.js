@@ -35,7 +35,7 @@ function Form(props) {
     setAmt(e.target.value);
   }
   return (
-    <div className="form-container" style={{width: '50vw', height: '30vh', border: '1px solid #000', display: 'inline-flex', margin: '2vh 0 0 15vw', backgroundColor: '#b6b9ba'}}>
+    <div className="form-container" style={{width: '50vw', height: '30vh', border: '1px solid #000', display: 'inline-flex', backgroundColor: '#b6b9ba'}}>
       <div className="buttons" style={{display: 'inline-grid'}}>
         <Button className="user-a" variant="contained" color="primary" onClick={handleBtnClick}
                                     style={{margin: '2vh 2vw 2vh 2vw'}}>USER A</Button>

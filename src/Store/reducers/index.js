@@ -1,11 +1,14 @@
-const initialState = { data: []}
-export const reducer = (state={initialState}, action) => {
+// const initialState = { "TxnData": {}, ""}
+export const reducer = (state = [], action) => {
   switch(action.type) {
     case 'TXN_DATA_RECEIVED':
-      return {...state, data: action.data};
+      // let latestTxnData = state.TxnData;
+      // latestTxnData.push(action.data);
+      // return Object.assign({...state}, {latestTxnData});
+      return [...state, action.data]
     case 'TXN_DATA_FAILED':
-      return {...state};
+      return state;
     default:
-      return {...state};
+      return state;
   }
 }

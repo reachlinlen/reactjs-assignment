@@ -144,7 +144,7 @@ export default function LineChart(props) {
   });
 
   return (
-    <div className="svg-line" style={{height: SVG_HT, width: SVG_WTH, backgroundColor: '#b6b9ba'}}>
+    <div className="svg-line" style={{height: SVG_HT, width: SVG_WTH, backgroundColor: '#b6b9ba', marginTop: '20px'}}>
       <svg width={SVG_WTH} height={SVG_HT} id={"line-chart"} />
     </div>
   );

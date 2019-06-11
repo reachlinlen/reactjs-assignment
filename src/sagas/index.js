@@ -3,6 +3,7 @@ import axios from 'axios';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import "regenerator-runtime/runtime";
 
+const mongoose = require('mongoose');
 const headers = {
     'Content-Type': 'application/json',
     // 'Authorization': 'JWT',
@@ -12,9 +13,9 @@ const headers = {
     'X-Content-Type-Options': 'nosniff',
     'Pragma': 'no-cache',
 };
-
 const URL = 'http://localhost:8081';
 
+// mongoose.connect(mongodb+srv://dbUser:<dbPassword>@transaction-9gekk.mongodb.net/test?retryWrites=true&w=majority);
 function* getTxnAPI() {
   return axios.get(URL+'/txn', {headers: headers})
                 .then(res => res)
@@ -35,7 +36,7 @@ function* getTxn(action) {
 
 function* recordTxn(action) {
     const { res, error } = yield call(recordTxnAPI, action.payload );
-    yield put({ type: 'TXN_DATA_RECEIVED', data: action.payload});
+    yield put({ type: 'TXN_DATA_RECEIVED', data: action.payload });
     // if (error) yield put({ type: 'PUT_TXN_ERROR', error});
 }
 
