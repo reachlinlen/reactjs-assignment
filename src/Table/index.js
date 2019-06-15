@@ -11,12 +11,11 @@ function Table(props) {
   const [pageNo, setPageNo] = useState(1);
   const [pageButtons, setPageButtons] = useState([]);
   // const [totPages, setTotPages] = useState(1);
-  let totPages = 1;
+  let totPages = 1, currPages = [], prevTotPages = 0;
   const NOROWS_PAGE = 3;
   let BUT1, BUT2, BUT3, NAVBUT1, NAVBUT2;
 
   useEffect(() => {
-    // let txnData = (props.txnData === undefined) ? [] : props.txnData;
     let txnData = props.txnData, latestTxns = [];
     if (txnData.length > NOROWS_PAGE) {
       if (pageNo === 1) latestTxns = txnData.slice(0,NOROWS_PAGE);
@@ -29,24 +28,58 @@ function Table(props) {
   }, [props.txnData]);
 
   useLayoutEffect(() => {
-    
-    let currTotPages = Math.trunc(props.txnData.length/3) + (props.txnData.length%3 !== 0 ? 1 : 0);
-    // let pageBut = 
-    // if (currTotPages !== totPages) {
-    //   if (currTotPages > totPages) {
-        
-    //   } else {
-
-    //   }
-    // }
-    if (currTotPages > 1) {
-      let BUT1 = <Button className="user-a" variant="contained" color="primary" onClick={handlePageBtnClick}
-                style={{margin: '2vh 2vw 2vh 2vw'}}>1</Button>;
-      let BUT2 = <Button className="user-a" variant="contained" color="primary" onClick={handlePageBtnClick}
-                style={{margin: '2vh 2vw 2vh 2vw'}}>2</Button>;
-      setPageButtons([BUT1, BUT2]);
+  let currTotPages = Math.trunc(props.txnData.length/3) + (props.txnData.length%3 !== 0 ? 1 : 0);  
+  if (prevTotPages !== currTotPages) {
+    switch (currTotPages) {
+      case 1:
+        // currPages = [];
+        // setPageButtons(createPageBut(currPages));
+        prevTotPages = currTotPages;
+        break;
+      case 2:
+        currPages = [1,2];
+        createPageBut(currPages);
+        prevTotPages = currTotPages;
+        break;
+      case 3:
+        currPages = [1,2,3];
+        createPageBut(currPages);
+        prevTotPages = currTotPages;
+        break
+      case 4:
+        currPages = [1,2,3,4];
+        createPageBut(currPages);
+        prevTotPages = currTotPages;
+        break;
+      case 5:
+        currPages = [1,2,3,4,5];
+        createPageBut(currPages);
+        prevTotPages = currTotPages;
+        break;
+      default:
+        switch (pageNo) {
+          case 1 || 2 || 3 || 4 || 5:
+            currPages = [1,2,3,4,5,'>'];
+            break;
+          default:
+            if (currTotPages === pageNo) currPages = ['<',pageNo-4, pageNo-3, pageNo-2, pageNo-1, pageNo];
+            else currPages = ['<',pageNo-4, pageNo-3, pageNo-2, pageNo-1, pageNo,'>'];
+        }
+        createPageBut(currPages);
+        prevTotPages = currTotPages;
+        break;
     }
+  }  
+  setPageButtons([BUT1, BUT2]);
   }, [props.txnData]);
+
+  const createPageBut = (pages) => {
+    let Buttons = pages.forEach(e => {
+                    return <Button className="user-a" variant="contained" color="primary" onClick={handlePageBtnClick}
+                              style={{margin: '2vh 2vw 2vh 2vw'}}>{e}</Button>;
+    });
+    setPageButtons(Buttons);
+  }
 
   const handlePageBtnClick = (e) => {
     let txnData = props.txnData, pageClicked = parseInt(e.target.innerHTML);
