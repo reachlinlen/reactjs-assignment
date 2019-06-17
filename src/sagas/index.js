@@ -3,7 +3,7 @@ import axios from 'axios';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import "regenerator-runtime/runtime";
 
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const headers = {
     'Content-Type': 'application/json',
     // 'Authorization': 'JWT',

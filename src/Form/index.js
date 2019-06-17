@@ -11,7 +11,7 @@ function Form(props) {
   const [amt, setAmt] = useState(0);
 
   const handleBtnClick = (e) => {
-    setUser(e.target.innerHTML);
+    setUser(e.target.innerText);
   }
   const handleBankChange = (e) => {
     setBank(e.target.value);
@@ -22,7 +22,7 @@ function Form(props) {
       alert("Please enter transaction amount between 0 and 5000");
     } else {
       let data = {
-        "transID" : "TRANS"+ user.replace(/\s/g, '') + Math.floor(Date.now()/1000),
+        "tranID" : "TRANS"+ user.replace(/\s/g, '') + Math.floor(Date.now()/1000),
         "userName": user,
         "bankName": bank,
         "txnAmt": amt
