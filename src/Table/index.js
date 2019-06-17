@@ -42,7 +42,8 @@ function Table(props) {
     locPageBut = [];
     prevTotPages = 0;
   }
-  if (currTotPages < 7 && prevTotPages !== currTotPages && currTotPages > 1) {
+  // if (currTotPages < 7 && prevTotPages !== currTotPages && currTotPages > 1) {
+  if (prevTotPages !== currTotPages && currTotPages > 1) {
     switch (currTotPages) {
       case 2:
         createPageBut([1,2]);
@@ -58,6 +59,9 @@ function Table(props) {
         break;
       case 6:
         createPageBut([1,2,3,4,5,'>']);
+        break;
+      default:
+        createPageBut(pageButtons[0]);
         break;
       // case 7:
       //   createPageBut([2,3,4,5,6,'>']);
@@ -76,8 +80,8 @@ function Table(props) {
                   return <Button className="user-a" variant="contained" color="primary" onClick={handlePageBtnClick}
                           style={{margin: '2vh 2vw 2vh 2vw'}}>{e}</Button>;
                 });
-    if (pages[pages.length-1] === '>') pages.pop();
-    if (pages[0] === '<') pages.shift();
+    // if (pages[pages.length-1] === '>') pages.pop();
+    // if (pages[0] === '<') pages.shift();
     setPageButtons([pages, newPageButtons]);
   }
 
@@ -86,15 +90,16 @@ function Table(props) {
   }
 
   const handleArrowBtnClick = (e) => {
-    let newPages = [...pageButtons[0]], tran = props.txnData;
-    let totPages = Math.trunc(tran.length/NOROWS_PAGE) + 
-                              (tran.length%NOROWS_PAGE !== 0 ? 1 : 0),
+    let totPages = Math.trunc(props.txnData.length/NOROWS_PAGE) + 
+                              (props.txnData.length%NOROWS_PAGE !== 0 ? 1 : 0),
         len = pageButtons[0].length, listPages = [];
+    if (pageButtons[0][len-1] === '>') {pageButtons[0].pop(); --len;}
+    if (pageButtons[0][0] === '<') {pageButtons[0].shift(); --len;}
     if (e.target.innerText === '<') 
       for(let ind=0; ind<len; ind++) listPages[ind] = --pageButtons[0][ind];
     else
       for(let ind=0; ind<len; ind++) listPages[ind] = ++pageButtons[0][ind];
-    if (listPages[len-1] !== totPages) listPages.push('>');
+    if (listPages[listPages.length-1] !== totPages) listPages.push('>');
     if (listPages[0] !== 1) listPages.unshift('<');
     createPageBut(listPages);
   }
