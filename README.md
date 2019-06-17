@@ -7,4 +7,6 @@ Simiarly, the line chart has been connected to stores and hence, the chart gets 
 Currently, one transaction has been kept per page for demo purpose and it can be changed as the app dev work is completed.
 
 STEPS
-Please run the command 'npm start' to start the webpack dev server at port 8080 i.e. please open http://localhost:8080 to access the app 
+Please run the following commands after traversing to root folder (reactjs-uob):
+  1. 'npm install' - to install all the dependencies
+  2. 'npm start' to start the webpack dev server at port 8080 i.e. please open http://localhost:8080 to access the app 
