@@ -1,33 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 
 const SVG_WTH = 720, SVG_HT = 403, LEG_COLORS = ["red", "green", "blue"];
 var d3 = require("d3");
-export default function LineChart(props) {
+
+function LineChart(props) {
   useEffect(() => {
-    d3.selectAll("tran-line-chart").remove();
-    let data = [
-      ["transID01", "USER - A", "American Express", 2500],
-      ["transID02", "USER - B", "American Express", 2500],
-      ["transID03", "USER - C", "American Express", 1750],
-      ["transID13", "USER - C", "American Express",  750],
-      ["transID04", "USER - A", "DBS", 2500],
-      ["transID05", "USER - B", "DBS", 1500],
-      ["transID06", "USER - C", "DBS", 500],
-      ["transID07", "USER - A", "VISA", 2500],
-      ["transID07", "USER - B", "VISA", 1250],
-      ["transID07", "USER - C", "VISA", 250],
-    ];
+    if (props.data === [] || props.data === undefined) return;
+    d3.selectAll("#tran-line-chart").remove();
     let finalData = {}, cards = [], maxAmt = 0, maxTran = 0, txnNos = new Set();
-    data.forEach(d => {
-      let ind = cards.indexOf(d[2]);
-      maxAmt = Math.max(maxAmt, d[3]);
+    props.data.forEach(d => {
+      let ind = cards.indexOf(d['bankName']);
+      maxAmt = Math.max(maxAmt, d['txnAmt']);
       if (ind === -1) {
-        cards.push(d[2]);
-        ind = cards.indexOf(d[2]);
+        cards.push(d['bankName']);
+        ind = cards.indexOf(d['bankName']);
         finalData[ind] = {};
       }
-      finalData[ind][d[3]] = finalData[ind][d[3]] === undefined ?
-                                        1 : finalData[ind][d[3]] + 1;
+      finalData[ind][d['txnAmt']] = finalData[ind][d['txnAmt']] === undefined ?
+                                        1 : finalData[ind][d['txnAmt']] + 1;
     });
     Object.entries(finalData).forEach(([key, value]) => {
       Object.entries(value).forEach(([key, val]) => {
@@ -42,7 +33,7 @@ export default function LineChart(props) {
     svg.selectAll("legend-rect")
               .data(cards)
               .enter().append("rect")
-              .attr("x", (d,i) => (200 + i*100))
+              .attr("x", (d,i) => (200 + i*120))
               .attr("y", 10)
               .attr("width", 1.5+"vw")
               .attr("height", 1.5+"vh")
@@ -53,7 +44,7 @@ export default function LineChart(props) {
             .data([card])
             .enter().append("text")
             .text(d => d.slice(0,9))
-            .attr("x", d => (230 + index*100))
+            .attr("x", d => (230 + index*120))
             .attr("y", 20)
             .attr("width", 1.5+"vw")
             .attr("height", 1.5+"vh")
@@ -62,7 +53,7 @@ export default function LineChart(props) {
             .data([card])
             .enter().append("text")
             .text(d => d.slice(9))
-            .attr("x", d => (230 + index*100))
+            .attr("x", d => (230 + index*120))
             .attr("y", 40)
             .attr("width", 1.5+"vw")
             .attr("height", 1.5+"vh")
@@ -73,7 +64,7 @@ export default function LineChart(props) {
             .data([card])
             .enter().append("text")
             .text(d => d)
-            .attr("x", (d,i) => (230 + index*100))
+            .attr("x", (d,i) => (230 + index*120))
             .attr("y", 20)
             .attr("width", 1.5+"vw")
             .attr("height", 1.5+"vh")
@@ -149,3 +140,9 @@ export default function LineChart(props) {
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  data: state.data
+});
+
+export default connect(mapStateToProps, null)(LineChart);
