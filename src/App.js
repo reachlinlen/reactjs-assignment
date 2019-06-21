@@ -1,23 +1,28 @@
-import React, { Component } from "react";
-import ReactDOM from "react-dom";
+import React, { useEffect } from "react";
 import Form from './Form';
 import Table from './Table';
 import LineChart from './LineChart';
+import connect from 'react-redux';
 
-class App extends Component {
-  constructor() {
-    super();
-  }
+function App(props) {
 
-  render() {
-    return (
-      <div style={{display: 'inline-grid', paddingLeft: '50px'}}>
-        <Form />
-        <Table />
-        <LineChart />
-      </div>
-    );
+  useEffect(() => {
+    props.getTxn();
+  }, []);
+
+  return (
+    <div style={{display: 'inline-grid', paddingLeft: '50px'}}>
+      <Form />
+      <Table />
+      <LineChart />
+    </div>
+  );
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getTxn: () => dispatch({ type: "TXN_GET_RECORD" })
   }
 }
 
-export default App;
+export default connect(mapDispatchToProps, null)(App);
