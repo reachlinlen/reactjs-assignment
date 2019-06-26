@@ -29,7 +29,6 @@ function LineChart(props) {
     let svg = d3.select("#line-chart")
                   .append("g")
                   .attr("id", "tran-line-chart");
-        // svg.selectAll
     svg.selectAll("legend-rect")
               .data(cards)
               .enter().append("rect")
@@ -71,6 +70,21 @@ function LineChart(props) {
             .attr("stroke", "#000");
       }
     });
+    svg.selectAll("text-xaxis")
+        .data(["No. of Transactions"])
+        .enter().append("text")
+        .text(d => d)
+        .attr("x", 0.5*SVG_WTH)
+        .attr("y", 0.99*SVG_HT)
+        .attr("text-anchor", "middle");
+//
+    let xAxis = 0.04 * SVG_WTH, yAxis = 0.5 * SVG_HT;
+    svg.selectAll("text-yaxis")
+        .data(["Transaction Amount"])
+        .enter().append("text")
+        .text(d => d)
+        .attr("transform", "translate("+xAxis+","+yAxis+")"+"rotate(-90)")
+        .attr("text-anchor", "middle");
     let scaleLeft = d3.scaleLinear().domain([0, maxAmt]).range([0.8*SVG_HT,0]);
     let leftAxis = d3.axisLeft(scaleLeft).ticks(8);
         svg.append("g")
@@ -89,10 +103,9 @@ function LineChart(props) {
       }
       botAxis = d3.axisBottom(scaleBot).tickValues(tickVal);
     }
-    // let botAxis = d3.axisBottom(scaleBot).ticks(8);
-        svg.append("g")
-            .attr("transform", "translate(80, 373)")
-            .call(botAxis);
+    svg.append("g")
+        .attr("transform", "translate(80, 373)")
+        .call(botAxis);
     let points = [];
     Object.entries(finalData).forEach(([key, value]) => {
       let axisPts = [];
