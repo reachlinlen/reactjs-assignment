@@ -4,7 +4,7 @@ import Row from './Row';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 
-const NOROWS_PAGE = 1;
+const NOROWS_PAGE = 5;
 function Table(props) {
   const [rowElements, setRowElements] = useState([]);
   const [pageNo, setPageNo] = useState(1);
@@ -58,7 +58,8 @@ function Table(props) {
         createPageBut([1,2,3,4,5,'>'], currTotPages);
         break;
       default:
-        createPageBut(pageButtons[0], currTotPages);
+        if (pageButtons[0] !== undefined) createPageBut(pageButtons[0], currTotPages);
+        else createPageBut([1,2,3,4,5,'>'], currTotPages);
         break;
     }
    }  
@@ -74,8 +75,6 @@ function Table(props) {
                   return <Button className="user-a" variant="contained" color="primary" onClick={handlePageBtnClick}
                           style={{margin: '2vh 2vw 2vh 2vw'}}>{e}</Button>;
                 });
-    // if (pages[pages.length-1] === '>') pages.pop();
-    // if (pages[0] === '<') pages.shift();
     setPageButtons([pages, newPageButtons, currTotPages]);
   }
 
