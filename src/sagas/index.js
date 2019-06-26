@@ -6,18 +6,23 @@ import "regenerator-runtime/runtime";
 // const mongoose = require('mongoose');
 const headers = {
     'Content-Type': 'application/json',
+    'crossDomain': true,
     // 'Authorization': 'JWT',
     // 'Access-Control-Allow-Origin': '*',
     'Content-Security-Policy': `default-src 'none'; script-src 'self';
                                 connect-src 'self';img-src 'self';style-src 'self';`,
-    'X-Content-Type-Options': 'nosniff',
+    'X-Content-Type-Options': 'nosniff', 
     'Pragma': 'no-cache',
 };
 const URL = "http://localhost:8081";
 
 function* getTxnAPI() {
-  return axios.get(URL+"/txn", { headers: headers })
-                .then(res => res)
+  return axios.get(URL+"/txn")
+                .then(res => {
+                    console.log(res)
+                    let data = res.data
+                    return data
+                })
                 .catch(error => error);
 }
 
@@ -28,8 +33,8 @@ function* recordTxnAPI(action) {
 }
 
 function* getTxn() {
-    const { res, error } = yield call(getTxnAPI);
-    res ? yield put({ type: "TXN_DATA_RECEIVED", data: res}) : 
+    const { data, error } = yield call(getTxnAPI);
+    data ? yield put({ type: "TXN_DATA_RECEIVED", data: data}) : 
           yield put({ type: "TXN_DATA_FAILED", data: error});
 }
 

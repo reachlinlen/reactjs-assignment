@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Form from './Form';
 import Table from './Table';
 import LineChart from './LineChart';
-import connect from 'react-redux';
+import { connect } from 'react-redux';
 
 function App(props) {
 
@@ -25,4 +25,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapDispatchToProps, null)(App);
+export default connect(null, mapDispatchToProps)(App);
