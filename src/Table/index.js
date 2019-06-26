@@ -101,7 +101,9 @@ function Table(props) {
         <TableHead />
         <React.Fragment>{rowElements}</React.Fragment>
       </table>
-      <div>{pageButtons[1]}</div>
+      <div>
+        <ul>{pageButtons[1]}</ul>
+      </div>
     </div>
   );
 }
